@@ -11,3 +11,5 @@ await Deno.writeTextFile(
   `./wasm/pkg/zepar.wasm.d.ts`,
   `export const wasm: string;`
 );
+
+await Deno.removeSync(`./wasm/pkg/.gitignore`);

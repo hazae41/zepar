@@ -1,6 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
 
 let wasm;
 
@@ -69,7 +66,7 @@ function takeObject(idx) {
 }
 /**
 */
-class Aes128Ctr128BEKey {
+export class Aes128Ctr128BEKey {
 
     static __wrap(ptr) {
         const obj = Object.create(Aes128Ctr128BEKey.prototype);
@@ -172,6 +169,10 @@ function getImports() {
     return imports;
 }
 
+function initMemory(imports, maybe_memory) {
+
+}
+
 function finalizeInit(instance, module) {
     wasm = instance.exports;
     init.__wbindgen_wasm_module = module;
@@ -185,6 +186,8 @@ function finalizeInit(instance, module) {
 function initSync(module) {
     const imports = getImports();
 
+    initMemory(imports);
+
     if (!(module instanceof WebAssembly.Module)) {
         module = new WebAssembly.Module(module);
     }
@@ -196,7 +199,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('zepar_bg.wasm', (typeof document === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : (document.currentScript && document.currentScript.src || new URL('wasm/pkg/zepar.cjs', document.baseURI).href)));
+        input = new URL('zepar_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
@@ -204,12 +207,12 @@ async function init(input) {
         input = fetch(input);
     }
 
+    initMemory(imports);
+
     const { instance, module } = await load(await input, imports);
 
     return finalizeInit(instance, module);
 }
 
-exports.Aes128Ctr128BEKey = Aes128Ctr128BEKey;
-exports["default"] = init;
-exports.initSync = initSync;
-//# sourceMappingURL=zepar.cjs.map
+export { initSync }
+export default init;

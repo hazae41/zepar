@@ -1,5 +1,4 @@
-import * as Zepar from "@hazae41/zepar";
-import { Aes128Ctr128BEKey } from "@hazae41/zepar";
+import { Aes128Ctr128BEKey, Zepar } from "@hazae41/zepar";
 import { randomBytes } from "crypto";
 
 Zepar.initSyncBundledOnce()
@@ -15,4 +14,5 @@ const hello2 = new TextEncoder().encode("Hello World")
 cipher.apply_keystream(hello)
 cipher.apply_keystream(hello2)
 
-console.log(hello, hello2)
+console.log(hello)
+console.log(hello2)

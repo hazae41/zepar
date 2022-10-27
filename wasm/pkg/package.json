@@ -1,0 +1,22 @@
+{
+  "name": "zepar",
+  "collaborators": [
+    "hazae41 <hazae41@proton.me>"
+  ],
+  "description": "WebAssembly port of RustCrypto's AES + CTR, Rust implementations of AES encryption with CTR mode.",
+  "version": "1.0.0",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hazae41/zepar-wasm"
+  },
+  "files": [
+    "zepar_bg.wasm",
+    "zepar.js",
+    "zepar.d.ts",
+    "LICENSE.md"
+  ],
+  "module": "zepar.js",
+  "types": "zepar.d.ts",
+  "sideEffects": false
+}

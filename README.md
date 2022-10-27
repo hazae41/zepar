@@ -3,8 +3,6 @@
 WebAssembly port of RustCrypto's [AES](https://github.com/RustCrypto/block-ciphers) + [CTR](https://github.com/RustCrypto/block-modes), 
 Rust implementations of AES encryption with CTR mode.
 
-### Install (Node)
-
 ```bash
 npm i @hazae41/zepar
 ```

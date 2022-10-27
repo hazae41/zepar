@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
 */
-declare class Aes128Ctr128BEKey {
+export class Aes128Ctr128BEKey {
   free(): void;
 /**
 * @param {Uint8Array} key
@@ -15,9 +15,9 @@ declare class Aes128Ctr128BEKey {
   apply_keystream(buf: Uint8Array): void;
 }
 
-type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
-interface InitOutput {
+export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly __wbg_aes128ctr128bekey_free: (a: number) => void;
   readonly aes128ctr128bekey_new: (a: number, b: number, c: number, d: number, e: number) => void;
@@ -27,7 +27,7 @@ interface InitOutput {
   readonly __wbindgen_free: (a: number, b: number) => void;
 }
 
-type SyncInitInput = BufferSource | WebAssembly.Module;
+export type SyncInitInput = BufferSource | WebAssembly.Module;
 /**
 * Instantiates the given `module`, which can either be bytes or
 * a precompiled `WebAssembly.Module`.
@@ -36,7 +36,7 @@ type SyncInitInput = BufferSource | WebAssembly.Module;
 *
 * @returns {InitOutput}
 */
-declare function initSync(module: SyncInitInput): InitOutput;
+export function initSync(module: SyncInitInput): InitOutput;
 
 /**
 * If `module_or_path` is {RequestInfo} or {URL}, makes a request and
@@ -46,6 +46,4 @@ declare function initSync(module: SyncInitInput): InitOutput;
 *
 * @returns {Promise<InitOutput>}
 */
-declare function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
-
-export { Aes128Ctr128BEKey, InitInput, InitOutput, SyncInitInput, init as default, initSync };
+export default function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
