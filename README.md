@@ -7,6 +7,8 @@ Rust implementations of AES encryption with CTR mode.
 npm i @hazae41/zepar
 ```
 
+[**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/7dv3pc) • [**Deno CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/480rz7) • [**Node CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/zn6c5r)
+
 ### Usage
 
 ```ts
