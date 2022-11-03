@@ -7,7 +7,7 @@ Rust implementations of AES encryption with CTR mode.
 npm i @hazae41/zepar
 ```
 
-[**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/7dv3pc) • [**Deno CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/480rz7) • [**Node CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/zn6c5r)
+[**Node Package 📦**](https://www.npmjs.com/package/@hazae41/zepar) • [**Deno Module 🦖**](https://deno.land/x/zepar) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/zepar-example-next)
 
 ### Usage
 
