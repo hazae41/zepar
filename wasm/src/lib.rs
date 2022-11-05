@@ -1,3 +1,3 @@
 #![no_std]
 
-mod aes128ctr128be;
+pub mod aes128ctr128be;
