@@ -210,6 +210,6 @@ async function init(input) {
 }
 
 exports.Aes128Ctr128BEKey = Aes128Ctr128BEKey;
-exports["default"] = init;
+exports.default = init;
 exports.initSync = initSync;
 //# sourceMappingURL=zepar.cjs.map

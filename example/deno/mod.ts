@@ -1,10 +1,12 @@
-import { Aes128Ctr128BEKey, Zepar } from "@hazae41/zepar";
-import { randomBytes } from "crypto";
+import { Aes128Ctr128BEKey, Zepar } from "../../src/deno/mod.ts";
 
-Zepar.initSyncBundledOnce()
+await Zepar.initBundledOnce()
 
-const key = randomBytes(16)
+const key = new Uint8Array(16)
 const iv = new Uint8Array(16)
+
+crypto.getRandomValues(key)
+crypto.getRandomValues(iv)
 
 const cipher = new Aes128Ctr128BEKey(key, iv)
 

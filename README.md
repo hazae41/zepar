@@ -12,8 +12,7 @@ npm i @hazae41/zepar
 ### Usage
 
 ```ts
-import * as Zepar from "@hazae41/zepar";
-import { Aes128Ctr128BEKey } from "@hazae41/zepar";
+import { Zepar, Aes128Ctr128BEKey } from "@hazae41/zepar";
 import { randomBytes } from "crypto";
 
 // Wait for WASM to load
@@ -22,8 +21,8 @@ Zepar.initSyncBundledOnce()
 // Random key
 const key = randomBytes(16)
 
-// Empty IV
-const iv = new Uint8Array(16)
+// Random IV
+const iv = randomBytes(16)
 
 // Build a cipher from key and IV
 const cipher = new Aes128Ctr128BEKey(key, iv)
