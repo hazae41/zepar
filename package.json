@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@hazae41/zepar",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "WebAssembly port of RustCrypto's AES + CTR, Rust implementations of AES encryption with CTR mode.",
   "homepage": "https://github.com/hazae41/zepar",
   "repository": "github:hazae41/zepar",
