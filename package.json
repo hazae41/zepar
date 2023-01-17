@@ -1,14 +1,15 @@
 {
   "type": "module",
   "name": "@hazae41/zepar",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "WebAssembly port of RustCrypto's AES + CTR, Rust implementations of AES encryption with CTR mode.",
   "homepage": "https://github.com/hazae41/zepar",
   "repository": "github:hazae41/zepar",
   "author": "hazae41",
   "license": "Unlicense",
-  "types": "./dist/types/src/node/index.d.ts",
   "main": "./dist/cjs/src/node/index.cjs",
+  "module": "./dist/esm/src/node/index.mjs",
+  "types": "./dist/types/src/node/index.d.ts",
   "sideEffects": false,
   "files": [
     "./dist/esm",
@@ -19,7 +20,7 @@
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
     "build:dist": "rimraf dist && node build.js && rollup -c",
     "build": "npm run build:wasm && npm run build:dist",
-    "test:node": "node ./dist/test/src/node/index.test.cjs",
+    "test:node": "node ./dist/test/src/node/index.test.mjs",
     "test:deno": "deno run --unstable ./src/deno/mod.test.ts",
     "test": "npm run test:node && npm run test:deno",
     "example:deno": "deno run ./example/deno/mod.ts",
@@ -27,27 +28,22 @@
     "prepare": "npm run build:dist"
   },
   "dependencies": {
-    "tslib": "^2.4.0"
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
-    "@hazae41/phobos": "^1.0.6",
-    "@rollup/plugin-commonjs": "^24.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "@rollup/plugin-typescript": "^10.0.1",
+    "@hazae41/phobos": "^1.0.10",
+    "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^18.11.18",
-    "rimraf": "^3.0.2",
-    "rollup": "^3.9.1",
-    "rollup-plugin-dts": "^5.1.0",
-    "rollup-plugin-node-externals": "^5.0.3",
-    "ts-node": "^10.9.1",
-    "ttypescript": "^1.5.15",
-    "typescript": "^4.9.4",
-    "typescript-transform-paths": "^3.4.4"
+    "rimraf": "^4.1.0",
+    "rollup": "^3.10.0",
+    "rollup-plugin-dts": "^5.1.1",
+    "rollup-plugin-node-externals": "^5.1.0",
+    "typescript": "^4.9.4"
   },
   "exports": {
     ".": {
       "types": "./dist/types/src/node/index.d.ts",
-      "import": "./dist/cjs/src/node/index.cjs",
+      "import": "./dist/esm/src/node/index.mjs",
       "require": "./dist/cjs/src/node/index.cjs"
     }
   },
