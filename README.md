@@ -1,4 +1,9 @@
-# AES-CTR for WebAssembly
+<div>
+  <img align="right" width="128" src="https://user-images.githubusercontent.com/4405263/216624555-216ea1a1-34bb-4406-a979-48a20b97d1a0.png"/>
+  <p></p>
+</div>
+
+# Zepar
 
 WebAssembly port of RustCrypto's [AES](https://github.com/RustCrypto/block-ciphers) + [CTR](https://github.com/RustCrypto/block-modes), 
 Rust implementations of AES encryption with CTR mode.
