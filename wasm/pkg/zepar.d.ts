@@ -21,10 +21,9 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly __wbg_aes128ctr128bekey_free: (a: number) => void;
   readonly aes128ctr128bekey_new: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly aes128ctr128bekey_apply_keystream: (a: number, b: number, c: number) => void;
+  readonly aes128ctr128bekey_apply_keystream: (a: number, b: number, c: number, d: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
-  readonly __wbindgen_malloc: (a: number) => number;
-  readonly __wbindgen_free: (a: number, b: number) => void;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
@@ -46,4 +45,14 @@ export function initSync(module: SyncInitInput): InitOutput;
 *
 * @returns {Promise<InitOutput>}
 */
-export function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
+export function __wbg_init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
+
+export class Slice {
+
+  constructor(ptr: number, len: number);
+
+  get bytes(): Uint8Array
+
+  free(): void
+
+}

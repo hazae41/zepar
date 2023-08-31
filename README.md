@@ -5,8 +5,7 @@
 
 # Zepar
 
-WebAssembly port of RustCrypto's [AES](https://github.com/RustCrypto/block-ciphers) + [CTR](https://github.com/RustCrypto/block-modes), 
-Rust implementations of AES encryption with CTR mode.
+WebAssembly port of AES encryption with CTR mode
 
 ```bash
 npm i @hazae41/zepar
@@ -14,14 +13,23 @@ npm i @hazae41/zepar
 
 [**Node Package 📦**](https://www.npmjs.com/package/@hazae41/zepar) • [**Deno Module 🦖**](https://deno.land/x/zepar) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/zepar-example-next)
 
-### Usage
+## Algorithms
+- AES from RustCrypto (aes) (audited)
+- CTR from RustCrypto (ctr) (audited)
+
+## Features
+- Reproducible building
+- Pre-bundled and streamed
+- Zero-copy memory slices
+
+## Usage
 
 ```ts
 import { Zepar, Aes128Ctr128BEKey } from "@hazae41/zepar";
 import { randomBytes } from "crypto";
 
 // Wait for WASM to load
-Zepar.initSyncBundledOnce()
+await Zepar.initBundledOnce()
 
 // Random key
 const key = randomBytes(16)
@@ -45,6 +53,8 @@ cipher.apply_keystream(hello2)
 // hello !== hello2
 console.log(hello, hello2)
 ```
+
+## Building
 
 ### Unreproducible building
 

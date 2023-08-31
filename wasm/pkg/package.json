@@ -13,10 +13,11 @@
   "files": [
     "zepar_bg.wasm",
     "zepar.js",
-    "zepar.d.ts",
-    "LICENSE.md"
+    "zepar.d.ts"
   ],
   "module": "zepar.js",
   "types": "zepar.d.ts",
-  "sideEffects": false
+  "sideEffects": [
+    "./snippets/*"
+  ]
 }
