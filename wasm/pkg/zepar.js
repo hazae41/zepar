@@ -33,25 +33,6 @@ function addHeapObject(obj) {
     return idx;
 }
 
-function getArrayU8FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
-}
-
-function getObject(idx) { return heap[idx]; }
-
-function dropObject(idx) {
-    if (idx < 132) return;
-    heap[idx] = heap_next;
-    heap_next = idx;
-}
-
-function takeObject(idx) {
-    const ret = getObject(idx);
-    dropObject(idx);
-    return ret;
-}
-
 let WASM_VECTOR_LEN = 0;
 
 function passArray8ToWasm0(arg, malloc) {
@@ -68,6 +49,25 @@ function getInt32Memory0() {
         cachedInt32Memory0 = new Int32Array(wasm.memory.buffer);
     }
     return cachedInt32Memory0;
+}
+
+function getObject(idx) { return heap[idx]; }
+
+function dropObject(idx) {
+    if (idx < 132) return;
+    heap[idx] = heap_next;
+    heap_next = idx;
+}
+
+function takeObject(idx) {
+    const ret = getObject(idx);
+    dropObject(idx);
+    return ret;
+}
+
+function getArrayU8FromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
+    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
 }
 /**
 */
@@ -117,11 +117,22 @@ export class Aes128Ctr128BEKey {
     }
     /**
     * @param {Uint8Array} buf
+    * @returns {Slice}
     */
     apply_keystream(buf) {
-        var ptr0 = passArray8ToWasm0(buf, wasm.__wbindgen_malloc);
-        var len0 = WASM_VECTOR_LEN;
-        wasm.aes128ctr128bekey_apply_keystream(this.__wbg_ptr, ptr0, len0, addHeapObject(buf));
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passArray8ToWasm0(buf, wasm.__wbindgen_malloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.aes128ctr128bekey_apply_keystream(retptr, this.__wbg_ptr, ptr0, len0);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var v2 = new Slice(r0, r1);
+            ;
+            return v2;
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
 }
 
@@ -162,12 +173,6 @@ function __wbg_get_imports() {
     imports.wbg.__wbindgen_error_new = function(arg0, arg1) {
         const ret = new Error(getStringFromWasm0(arg0, arg1));
         return addHeapObject(ret);
-    };
-    imports.wbg.__wbindgen_copy_to_typed_array = function(arg0, arg1, arg2) {
-        new Uint8Array(getObject(arg2).buffer, getObject(arg2).byteOffset, getObject(arg2).byteLength).set(getArrayU8FromWasm0(arg0, arg1));
-    };
-    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
     };
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));
@@ -233,7 +238,7 @@ export class Slice {
   /**
    * @param {number} ptr 
    * @param {number} len 
-   */
+   **/
   constructor(ptr, len) {
     this.ptr = ptr
     this.len = len
@@ -243,7 +248,7 @@ export class Slice {
 
   /**
    * @returns {Uint8Array}
-   */
+   **/
   get bytes() {
     return getUint8Memory0().subarray(this.start, this.end)
   }
@@ -253,6 +258,29 @@ export class Slice {
    **/
   free() {
     wasm.__wbindgen_free(this.ptr, this.len * 1);
+  }
+
+  /**
+   * @returns {Uint8Array}
+   **/
+  copy() {
+    const bytes = this.bytes.slice()
+    this.free()
+    return bytes
+  }
+
+  /**
+   * @returns {void}
+   **/
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  /**
+   * @returns {void}
+   **/
+  dispose() {
+    this.free()
   }
 
 }

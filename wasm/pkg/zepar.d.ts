@@ -11,8 +11,9 @@ export class Aes128Ctr128BEKey {
   constructor(key: Uint8Array, iv: Uint8Array);
 /**
 * @param {Uint8Array} buf
+* @returns {Slice}
 */
-  apply_keystream(buf: Uint8Array): void;
+  apply_keystream(buf: Uint8Array): Slice;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -24,6 +25,7 @@ export interface InitOutput {
   readonly aes128ctr128bekey_apply_keystream: (a: number, b: number, c: number, d: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
@@ -49,10 +51,35 @@ export function __wbg_init (module_or_path?: InitInput | Promise<InitInput>): Pr
 
 export class Slice {
 
+  readonly ptr: number
+
+  readonly len: number
+
   constructor(ptr: number, len: number);
 
+  /**
+   * Get the bytes in memory
+   **/
   get bytes(): Uint8Array
 
+  /**
+   * Free the bytes
+   **/
   free(): void
+
+  /**
+   * Copy the bytes and free them
+   **/
+  copy(): Uint8Array
+
+  /**
+   * Free the bytes
+   **/
+  [Symbol.dispose](): void
+
+  /**
+   * Free the bytes
+   **/
+  dispose(): void
 
 }

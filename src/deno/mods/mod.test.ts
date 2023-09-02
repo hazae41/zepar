@@ -16,9 +16,7 @@ function clone(x: Uint8Array) {
 test("AES-128 + CTR-128-BE", async () => {
   await initBundledOnce()
 
-  const buffer = new TextEncoder().encode("Hello World")
-
-  const original = clone(buffer)
+  const original = new TextEncoder().encode("Hello World")
 
   const key = new Uint8Array(16)
   const iv = new Uint8Array(16)
@@ -33,15 +31,11 @@ test("AES-128 + CTR-128-BE", async () => {
    * Encryption
    */
 
-  cipher.apply_keystream(buffer)
-
-  const encrypted1 = clone(buffer)
+  const encrypted1 = cipher.apply_keystream(original).copy()
 
   assert(!equals(encrypted1, original), `encrypted1 should not be equals to original`)
 
-  cipher.apply_keystream(buffer)
-
-  const encrypted2 = clone(buffer)
+  const encrypted2 = cipher.apply_keystream(encrypted1).copy()
 
   assert(!equals(encrypted2, original), `encrypted2 should not be equals to original`)
   assert(!equals(encrypted2, encrypted1), `encrypted2 should not be equals to encrypted1`)
@@ -50,15 +44,11 @@ test("AES-128 + CTR-128-BE", async () => {
    * Decryption
    */
 
-  decipher.apply_keystream(buffer)
-
-  const decrypted1 = clone(buffer)
+  const decrypted1 = decipher.apply_keystream(encrypted2).copy()
 
   assert(!equals(decrypted1, original), `decrypted1 should not be equals to original`)
 
-  decipher.apply_keystream(buffer)
-
-  const decrypted2 = clone(buffer)
+  const decrypted2 = decipher.apply_keystream(decrypted1).copy()
 
   assert(!equals(decrypted2, decrypted1), `decrypted2 should not be equals to decrypted1`)
   assert(equals(decrypted2, original), `decrypted2 should be equals to original`)

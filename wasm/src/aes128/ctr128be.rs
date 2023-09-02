@@ -1,6 +1,6 @@
 extern crate alloc;
 
-use alloc::boxed::Box;
+use alloc::{boxed::Box, vec::Vec};
 
 use wasm_bindgen::prelude::*;
 
@@ -26,9 +26,11 @@ impl Aes128Ctr128BEKey {
     }
 
     #[wasm_bindgen]
-    pub fn apply_keystream(&mut self, buf: &mut [u8]) -> () {
+    pub fn apply_keystream(&mut self, mut buf: Vec<u8>) -> Vec<u8> {
         use ctr::cipher::StreamCipher;
 
-        self.inner.apply_keystream(buf);
+        self.inner.apply_keystream(&mut buf);
+
+        return buf;
     }
 }

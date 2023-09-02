@@ -42,16 +42,15 @@ const cipher = new Aes128Ctr128BEKey(key, iv)
 
 // Byte arrays to encrypt
 const hello = new TextEncoder().encode("Hello World")
-const hello2 = new TextEncoder().encode("Hello World")
 
 // Encrypt with counter = 0
-cipher.apply_keystream(hello)
+const encrypted0 = cipher.apply_keystream(hello).copy()
 
 // Encrypt with counter = 1
-cipher.apply_keystream(hello2)
+const encrypted1 = cipher.apply_keystream(hello).copy()
 
-// hello !== hello2
-console.log(hello, hello2)
+// encrypted0 !== encrypted1
+console.log(encrypted0, encrypted1)
 ```
 
 ## Building
