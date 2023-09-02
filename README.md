@@ -51,6 +51,8 @@ const encrypted1 = cipher.apply_keystream(hello).copy()
 
 // encrypted0 !== encrypted1
 console.log(encrypted0, encrypted1)
+
+cipher.free()
 ```
 
 ## Building
