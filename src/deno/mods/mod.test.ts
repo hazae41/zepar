@@ -3,14 +3,7 @@ import { assert, test } from "npm:@hazae41/phobos";
 import { Aes128Ctr128BEKey, initBundledOnce } from "./mod.ts";
 
 function equals(a: Uint8Array, b: Uint8Array) {
-  const ba = Buffer.from(a.buffer)
-  const bb = Buffer.from(b.buffer)
-
-  return ba.equals(bb)
-}
-
-function clone(x: Uint8Array) {
-  return new Uint8Array(x)
+  return Buffer.from(a).equals(Buffer.from(b))
 }
 
 test("AES-128 + CTR-128-BE", async () => {
