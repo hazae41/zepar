@@ -3,6 +3,11 @@
 /**
 */
 export class Aes128Ctr128BEKey {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 * @param {Uint8Array} key

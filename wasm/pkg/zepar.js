@@ -88,7 +88,16 @@ export class Aes128Ctr128BEKey {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_aes128ctr128bekey_free(ptr);
     }
