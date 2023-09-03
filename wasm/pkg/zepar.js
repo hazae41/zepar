@@ -93,10 +93,6 @@ export class Aes128Ctr128BEKey {
     this.free()
   }
 
-  dispose() {
-    this.free()
-  }
-
   free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_aes128ctr128bekey_free(ptr);
@@ -282,13 +278,6 @@ export class Slice {
    * @returns {void}
    **/
   [Symbol.dispose]() {
-    this.free()
-  }
-
-  /**
-   * @returns {void}
-   **/
-  dispose() {
     this.free()
   }
 

@@ -6,8 +6,6 @@ export class Aes128Ctr128BEKey {
 
   [Symbol.dispose](): void
 
-  dispose(): void
-
   free(): void;
 /**
 * @param {Uint8Array} key
@@ -81,10 +79,5 @@ export class Slice {
    * Free the bytes
    **/
   [Symbol.dispose](): void
-
-  /**
-   * Free the bytes
-   **/
-  dispose(): void
 
 }
