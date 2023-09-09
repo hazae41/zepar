@@ -44,10 +44,10 @@ const cipher = new Aes128Ctr128BEKey(key, iv)
 const hello = new TextEncoder().encode("Hello World")
 
 // Encrypt with counter = 0
-const encrypted0 = cipher.apply_keystream(hello).copy()
+const encrypted0 = cipher.apply_keystream(hello).copyAndDispose()
 
 // Encrypt with counter = 1
-const encrypted1 = cipher.apply_keystream(hello).copy()
+const encrypted1 = cipher.apply_keystream(hello).copyAndDispose()
 
 // encrypted0 !== encrypted1
 console.log(encrypted0, encrypted1)
