@@ -1,14 +1,12 @@
 extern crate alloc;
 
-use alloc::{boxed::Box, vec::Vec};
+use alloc::vec::Vec;
 
 use wasm_bindgen::prelude::*;
 
-type Aes128Ctr128BE = ctr::Ctr128BE<aes::Aes128>;
-
 #[wasm_bindgen]
 pub struct Aes128Ctr128BEKey {
-    pub(crate) inner: Box<Aes128Ctr128BE>,
+    pub(crate) inner: ctr::Ctr128BE<aes::Aes128>,
 }
 
 #[wasm_bindgen]
@@ -19,8 +17,7 @@ impl Aes128Ctr128BEKey {
 
         let key16: [u8; 16] = key.try_into().map_err(JsError::from)?;
         let iv16: [u8; 16] = iv.try_into().map_err(JsError::from)?;
-        let cipher = Aes128Ctr128BE::new(&key16.into(), &iv16.into());
-        let inner = Box::new(cipher);
+        let inner = ctr::Ctr128BE::<aes::Aes128>::new(&key16.into(), &iv16.into());
 
         Ok(Self { inner })
     }
