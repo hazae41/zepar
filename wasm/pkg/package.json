@@ -3,7 +3,7 @@
   "collaborators": [
     "hazae41 <hazae41@proton.me>"
   ],
-  "description": "WebAssembly port of AES encryption with CTR mode",
+  "description": "WebAssembly port of Aes128Ctr128Be and ChaCha20Poly1305 encryption algorithms",
   "version": "1.0.0",
   "license": "Unlicense",
   "repository": {

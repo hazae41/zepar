@@ -1,6 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
+export function __wbg_chacha20poly1305cipher_free(a: number): void;
+export function chacha20poly1305cipher_new(a: number, b: number, c: number): void;
+export function chacha20poly1305cipher_encrypt(a: number, b: number, c: number, d: number, e: number, f: number): void;
+export function chacha20poly1305cipher_decrypt(a: number, b: number, c: number, d: number, e: number, f: number): void;
 export function __wbg_aes128ctr128bekey_free(a: number): void;
 export function aes128ctr128bekey_new(a: number, b: number, c: number, d: number, e: number): void;
 export function aes128ctr128bekey_apply_keystream(a: number, b: number, c: number, d: number): void;

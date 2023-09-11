@@ -22,11 +22,39 @@ export class Aes128Ctr128BEKey {
 */
   apply_keystream(buf: Uint8Array): Slice;
 }
+/**
+*/
+export class ChaCha20Poly1305Cipher {
+
+  [Symbol.dispose](): void
+
+  free(): void;
+/**
+* @param {Uint8Array} key
+*/
+  constructor(key: Uint8Array);
+/**
+* @param {Uint8Array} message
+* @param {Uint8Array} nonce
+* @returns {Slice}
+*/
+  encrypt(message: Uint8Array, nonce: Uint8Array): Slice;
+/**
+* @param {Uint8Array} message
+* @param {Uint8Array} nonce
+* @returns {Slice}
+*/
+  decrypt(message: Uint8Array, nonce: Uint8Array): Slice;
+}
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly __wbg_chacha20poly1305cipher_free: (a: number) => void;
+  readonly chacha20poly1305cipher_new: (a: number, b: number, c: number) => void;
+  readonly chacha20poly1305cipher_encrypt: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
+  readonly chacha20poly1305cipher_decrypt: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
   readonly __wbg_aes128ctr128bekey_free: (a: number) => void;
   readonly aes128ctr128bekey_new: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly aes128ctr128bekey_apply_keystream: (a: number, b: number, c: number, d: number) => void;
