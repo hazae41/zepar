@@ -5,7 +5,7 @@
 
 # Zepar
 
-WebAssembly port of AES encryption with CTR mode
+WebAssembly port of Aes128Ctr128Be and ChaCha20Poly1305 encryption algorithms
 
 ```bash
 npm i @hazae41/zepar
@@ -14,8 +14,8 @@ npm i @hazae41/zepar
 [**Node Package 📦**](https://www.npmjs.com/package/@hazae41/zepar) • [**Deno Module 🦖**](https://deno.land/x/zepar) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/zepar-example-next)
 
 ## Algorithms
-- AES from RustCrypto (aes) (audited)
-- CTR from RustCrypto (ctr) (audited)
+- Aes128Ctr128Be from RustCrypto (aes, ctr) (audited)
+- ChaCha20Poly1305 from RustCrypto (chacha20poly1305)
 
 ## Features
 - Reproducible building

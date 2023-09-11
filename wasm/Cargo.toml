@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = ["hazae41 <hazae41@proton.me>"]
 edition = "2021"
 
-description = "WebAssembly port of AES encryption with CTR mode"
+description = "WebAssembly port of Aes128Ctr128Be and ChaCha20Poly1305 encryption algorithms"
 repository = "https://github.com/hazae41/zepar-wasm"
 license = "Unlicense"
 
