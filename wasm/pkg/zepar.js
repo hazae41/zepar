@@ -98,11 +98,21 @@ export class Aes128Ctr128BEKey {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_aes128ctr128bekey_free(ptr);
     }
@@ -169,11 +179,21 @@ export class ChaCha20Poly1305Cipher {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_chacha20poly1305cipher_free(ptr);
     }
@@ -353,6 +373,8 @@ export default __wbg_init;
 
 export class Slice {
 
+  #freed = false
+
   /**
    * @param {number} ptr 
    * @param {number} len 
@@ -375,13 +397,22 @@ export class Slice {
    * @returns {Uint8Array}
    **/
   get bytes() {
+    if (this.#freed)
+      throw new Error("Freed")
     return getUint8Memory0().subarray(this.start, this.end)
+  }
+
+  get freed() {
+    return this.#freed
   }
 
   /**
    * @returns {void}
    **/
   free() {
+    if (this.#freed)
+      return
+    this.#freed = true
     wasm.__wbindgen_free(this.ptr, this.len * 1);
   }
 

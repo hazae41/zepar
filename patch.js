@@ -6,12 +6,25 @@ writeFileSync(`./wasm/pkg/zepar.wasm.js`, `export const data = "data:application
 writeFileSync(`./wasm/pkg/zepar.wasm.d.ts`, `export const data: string;`);
 
 const disposableJs = `
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
+
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
 `
 
 const disposableTs = `
+  get freed(): boolean
+
   [Symbol.dispose](): void
 `
 
@@ -29,7 +42,7 @@ const glueJs = readFileSync(`./wasm/pkg/zepar.js`, "utf8")
   .replaceAll("getArrayU8FromWasm0(r0, r1).slice()", "new Slice(r0, r1)")
   .replaceAll("wasm.__wbindgen_free(r0, r1 * 1)", "")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
-  .replaceAll("  free() {", disposableJs + "\n" + "  free() {")
+  .replaceAll("  free() {", disposableJs)
   .replaceAll("function passArray8ToWasm0(arg, malloc) {", zeroCopyPassJs)
 
 const glueTs = readFileSync(`./wasm/pkg/zepar.d.ts`, "utf8")
@@ -44,6 +57,8 @@ import { Ok } from "@hazae41/result"
 
 const postJs = `
 export class Slice {
+
+  #freed = false
 
   /**
    * @param {number} ptr 
@@ -67,13 +82,22 @@ export class Slice {
    * @returns {Uint8Array}
    **/
   get bytes() {
+    if (this.#freed)
+      throw new Error("Freed")
     return getUint8Memory0().subarray(this.start, this.end)
+  }
+
+  get freed() {
+    return this.#freed
   }
 
   /**
    * @returns {void}
    **/
   free() {
+    if (this.#freed)
+      return
+    this.#freed = true
     wasm.__wbindgen_free(this.ptr, this.len * 1);
   }
 
@@ -124,11 +148,17 @@ export class Slice {
 
   /**
    * Get the bytes in memory
+   * @throws if freed
    **/
   get bytes(): Uint8Array
 
   /**
-   * Free the bytes
+   * Is the memory freed?
+   **/
+  get freed(): boolean
+
+  /**
+   * Free the bytes (do nothing if already freed)
    **/
   free(): void
 

@@ -8,6 +8,8 @@ import type { Cursor, CursorWriteError } from "@hazae41/cursor"
 */
 export class Aes128Ctr128BEKey {
 
+  get freed(): boolean
+
   [Symbol.dispose](): void
 
   free(): void;
@@ -25,6 +27,8 @@ export class Aes128Ctr128BEKey {
 /**
 */
 export class ChaCha20Poly1305Cipher {
+
+  get freed(): boolean
 
   [Symbol.dispose](): void
 
@@ -100,11 +104,17 @@ export class Slice {
 
   /**
    * Get the bytes in memory
+   * @throws if freed
    **/
   get bytes(): Uint8Array
 
   /**
-   * Free the bytes
+   * Is the memory freed?
+   **/
+  get freed(): boolean
+
+  /**
+   * Free the bytes (do nothing if already freed)
    **/
   free(): void
 
