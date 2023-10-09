@@ -1,6 +1,5 @@
 
-import type { Result } from "@hazae41/result"
-import type { Cursor, CursorWriteError } from "@hazae41/cursor"
+import type { Box, Copiable, Copied } from "@hazae41/box"
 
 /* tslint:disable */
 /* eslint-disable */
@@ -17,12 +16,12 @@ export class Aes128Ctr128BEKey {
 * @param {Uint8Array} key
 * @param {Uint8Array} iv
 */
-  constructor(key: Uint8Array, iv: Uint8Array);
+  constructor(key: Box<Copiable>, iv: Box<Copiable>);
 /**
 * @param {Uint8Array} buf
 * @returns {Slice}
 */
-  apply_keystream(buf: Uint8Array): Slice;
+  apply_keystream(buf: Box<Copiable>): Slice;
 }
 /**
 */
@@ -36,19 +35,19 @@ export class ChaCha20Poly1305Cipher {
 /**
 * @param {Uint8Array} key
 */
-  constructor(key: Uint8Array);
+  constructor(key: Box<Copiable>);
 /**
 * @param {Uint8Array} message
 * @param {Uint8Array} nonce
 * @returns {Slice}
 */
-  encrypt(message: Uint8Array, nonce: Uint8Array): Slice;
+  encrypt(message: Box<Copiable>, nonce: Box<Copiable>): Slice;
 /**
 * @param {Uint8Array} message
 * @param {Uint8Array} nonce
 * @returns {Slice}
 */
-  decrypt(message: Uint8Array, nonce: Uint8Array): Slice;
+  decrypt(message: Box<Copiable>, nonce: Box<Copiable>): Slice;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -104,7 +103,6 @@ export class Slice {
 
   /**
    * Get the bytes in memory
-   * @throws if freed
    **/
   get bytes(): Uint8Array
 
@@ -121,10 +119,6 @@ export class Slice {
   /**
    * Copy the bytes and free them
    **/
-  copyAndDispose(): Uint8Array
-
-  trySize(): Result<number, never>
-
-  tryWrite(cursor: Cursor): Result<void, CursorWriteError>
+  copyAndDispose(): Copied
 
 }
