@@ -1,6 +1,3 @@
-
-import { Copied } from "@hazae41/box"
-
 let wasm;
 
 const cachedTextDecoder = (typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8', { ignoreBOM: true, fatal: true }) : { decode: () => { throw Error('TextDecoder not available') } } );
@@ -36,20 +33,11 @@ function addHeapObject(obj) {
     return idx;
 }
 
-let WASM_VECTOR_LEN = 0;
-
-function passArray8ToWasm0(arg, malloc) {
-    if (getUint8Memory0().buffer === arg.inner.bytes.buffer) {
-      const bytes = arg.unwrap().bytes
-      WASM_VECTOR_LEN = bytes.byteLength;
-      return bytes.byteOffset
+function _assertClass(instance, klass) {
+    if (!(instance instanceof klass)) {
+        throw new Error(`expected instance of ${klass.name}`);
     }
-
-    const bytes = arg.get().bytes
-    const ptr = malloc(bytes.length * 1, 1) >>> 0;
-    getUint8Memory0().set(bytes, ptr / 1);
-    WASM_VECTOR_LEN = bytes.length;
-    return ptr;
+    return instance.ptr;
 }
 
 let cachedInt32Memory0 = null;
@@ -75,9 +63,13 @@ function takeObject(idx) {
     return ret;
 }
 
-function getArrayU8FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
+let WASM_VECTOR_LEN = 0;
+
+function passArray8ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
+    getUint8Memory0().set(arg, ptr / 1);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
 }
 /**
 */
@@ -87,7 +79,6 @@ export class Aes128Ctr128BEKey {
         ptr = ptr >>> 0;
         const obj = Object.create(Aes128Ctr128BEKey.prototype);
         obj.__wbg_ptr = ptr;
-        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -99,35 +90,24 @@ export class Aes128Ctr128BEKey {
         return ptr;
     }
 
-  
-    get freed() {
-        return this.__wbg_freed
-    }
-
     [Symbol.dispose]() {
         this.free()
     }
 
     free() {
-        if (this.__wbg_freed)
-            return
-        this.__wbg_freed = true
-
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_aes128ctr128bekey_free(ptr);
     }
     /**
-    * @param {Box<Copiable>} key
-    * @param {Box<Copiable>} iv
+    * @param {Memory} key
+    * @param {Memory} iv
     */
     constructor(key, iv) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(key, wasm.__wbindgen_malloc);
-            const len0 = WASM_VECTOR_LEN;
-            const ptr1 = passArray8ToWasm0(iv, wasm.__wbindgen_malloc);
-            const len1 = WASM_VECTOR_LEN;
-            wasm.aes128ctr128bekey_new(retptr, ptr0, len0, ptr1, len1);
+            _assertClass(key, Memory);
+            _assertClass(iv, Memory);
+            wasm.aes128ctr128bekey_new(retptr, key.__wbg_ptr, iv.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -140,23 +120,11 @@ export class Aes128Ctr128BEKey {
         }
     }
     /**
-    * @param {Box<Copiable>} buf
-    * @returns {Slice}
+    * @param {Memory} memory
     */
-    apply_keystream(buf) {
-        try {
-            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(buf, wasm.__wbindgen_malloc);
-            const len0 = WASM_VECTOR_LEN;
-            wasm.aes128ctr128bekey_apply_keystream(retptr, this.__wbg_ptr, ptr0, len0);
-            var r0 = getInt32Memory0()[retptr / 4 + 0];
-            var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v2 = new Slice(r0, r1);
-            ;
-            return v2;
-        } finally {
-            wasm.__wbindgen_add_to_stack_pointer(16);
-        }
+    apply_keystream(memory) {
+        _assertClass(memory, Memory);
+        wasm.aes128ctr128bekey_apply_keystream(this.__wbg_ptr, memory.__wbg_ptr);
     }
 }
 /**
@@ -167,7 +135,6 @@ export class ChaCha20Poly1305Cipher {
         ptr = ptr >>> 0;
         const obj = Object.create(ChaCha20Poly1305Cipher.prototype);
         obj.__wbg_ptr = ptr;
-        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -179,32 +146,22 @@ export class ChaCha20Poly1305Cipher {
         return ptr;
     }
 
-  
-    get freed() {
-        return this.__wbg_freed
-    }
-
     [Symbol.dispose]() {
         this.free()
     }
 
     free() {
-        if (this.__wbg_freed)
-            return
-        this.__wbg_freed = true
-
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_chacha20poly1305cipher_free(ptr);
     }
     /**
-    * @param {Box<Copiable>} key
+    * @param {Memory} key
     */
     constructor(key) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(key, wasm.__wbindgen_malloc);
-            const len0 = WASM_VECTOR_LEN;
-            wasm.chacha20poly1305cipher_new(retptr, ptr0, len0);
+            _assertClass(key, Memory);
+            wasm.chacha20poly1305cipher_new(retptr, key.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -217,58 +174,114 @@ export class ChaCha20Poly1305Cipher {
         }
     }
     /**
-    * @param {Box<Copiable>} message
-    * @param {Box<Copiable>} nonce
-    * @returns {Slice}
+    * @param {Memory} message
+    * @param {Memory} nonce
+    * @returns {Memory}
     */
     encrypt(message, nonce) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(message, wasm.__wbindgen_malloc);
-            const len0 = WASM_VECTOR_LEN;
-            const ptr1 = passArray8ToWasm0(nonce, wasm.__wbindgen_malloc);
-            const len1 = WASM_VECTOR_LEN;
-            wasm.chacha20poly1305cipher_encrypt(retptr, this.__wbg_ptr, ptr0, len0, ptr1, len1);
+            _assertClass(message, Memory);
+            _assertClass(nonce, Memory);
+            wasm.chacha20poly1305cipher_encrypt(retptr, this.__wbg_ptr, message.__wbg_ptr, nonce.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
-            var r3 = getInt32Memory0()[retptr / 4 + 3];
-            if (r3) {
-                throw takeObject(r2);
+            if (r2) {
+                throw takeObject(r1);
             }
-            var v3 = new Slice(r0, r1);
-            ;
-            return v3;
+            return Memory.__wrap(r0);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
     }
     /**
-    * @param {Box<Copiable>} message
-    * @param {Box<Copiable>} nonce
-    * @returns {Slice}
+    * @param {Memory} message
+    * @param {Memory} nonce
+    * @returns {Memory}
     */
     decrypt(message, nonce) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(message, wasm.__wbindgen_malloc);
-            const len0 = WASM_VECTOR_LEN;
-            const ptr1 = passArray8ToWasm0(nonce, wasm.__wbindgen_malloc);
-            const len1 = WASM_VECTOR_LEN;
-            wasm.chacha20poly1305cipher_decrypt(retptr, this.__wbg_ptr, ptr0, len0, ptr1, len1);
+            _assertClass(message, Memory);
+            _assertClass(nonce, Memory);
+            wasm.chacha20poly1305cipher_decrypt(retptr, this.__wbg_ptr, message.__wbg_ptr, nonce.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
-            var r3 = getInt32Memory0()[retptr / 4 + 3];
-            if (r3) {
-                throw takeObject(r2);
+            if (r2) {
+                throw takeObject(r1);
             }
-            var v3 = new Slice(r0, r1);
-            ;
-            return v3;
+            return Memory.__wrap(r0);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
+    }
+}
+/**
+*/
+export class Memory {
+
+    static __wrap(ptr, ptr0, len0) {
+        ptr = ptr >>> 0;
+        const obj = Object.create(Memory.prototype);
+        obj.__wbg_ptr = ptr;
+        obj.__wbg_ptr0 = ptr0;
+        obj.__wbg_len0 = len0;
+
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+
+        return ptr;
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_memory_free(ptr);
+    }
+    /**
+    * @param {Uint8Array} inner
+    */
+    constructor(inner) {
+        const ptr0 = passArray8ToWasm0(inner, wasm.__wbindgen_malloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.memory_new(ptr0, len0);
+        return Memory.__wrap(ret, ptr0, len0);
+    }
+    /**
+    * @returns {number}
+    */
+    ptr() {
+        return this.__wbg_ptr0 ??= wasm.memory_ptr(this.__wbg_ptr);
+    }
+    /**
+    * @returns {number}
+    */
+    len() {
+        return this.__wbg_len0 ??= wasm.memory_len(this.__wbg_ptr);
+    }
+
+    freeNextTick() {
+        setTimeout(() => this.free(), 0);
+        return this;
+    }
+
+    get bytes() {
+        return getUint8Memory0().subarray(this.ptr(), this.ptr() + this.len());
+    }
+    
+    copyAndDispose() {
+        const bytes = this.bytes.slice();
+        this.free();
+        return bytes;
     }
 }
 
@@ -368,58 +381,3 @@ export async function __wbg_init(input) {
 
 export { initSync }
 export default __wbg_init;
-
-
-export class Slice {
-
-  #freed = false
-
-  /**
-   * @param {number} ptr 
-   * @param {number} len 
-   **/
-  constructor(ptr, len) {
-    this.ptr = ptr
-    this.len = len
-    this.start = (ptr >>> 0) / 1
-    this.end = this.start + len
-  }
-
-  /**
-   * @returns {void}
-   **/
-  [Symbol.dispose]() {
-    this.free()
-  }
-
-  /**
-   * @returns {Uint8Array}
-   **/
-  get bytes() {
-    return getUint8Memory0().subarray(this.start, this.end)
-  }
-
-  get freed() {
-    return this.#freed
-  }
-
-  /**
-   * @returns {void}
-   **/
-  free() {
-    if (this.#freed)
-      return
-    this.#freed = true
-    wasm.__wbindgen_free(this.ptr, this.len * 1);
-  }
-
-  /**
-   * @returns {Copied}
-   **/
-  copyAndDispose() {
-    const bytes = this.bytes.slice()
-    this.free()
-    return new Copied(bytes)
-  }
-
-}
